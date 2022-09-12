@@ -1,36 +1,46 @@
 package com.example.hellospring.service;
 
 import com.example.hellospring.domain.Member;
+import com.example.hellospring.repository.MemberRepository;
 import com.example.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.beans.Transient;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
+@SpringBootTest
+@Transactional
 class MemberServiceTest {
 
+    @Autowired
     MemberService memberService;
-    MemoryMemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
-    @BeforeEach
-    void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
+//    @BeforeEach
+//    void beforeEach() {
+//        memberRepository = new MemoryMemberRepository();
+//        memberService = new MemberService(memberRepository);
+//    }
 
 
-    @AfterEach
-    void afterEach() {
-        memberRepository.clearStore();
-    }
+//    @AfterEach
+//    void afterEach() {
+//        memberRepository.clearStore();
+//    }
 
     @Test
     void join() {
         // given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         // when
         Long saveId = memberService.join(member);
