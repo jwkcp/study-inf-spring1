@@ -27,8 +27,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Member> findById(Long id) {
-        return jdbcTemplate.query("select * from member where id = ?", )
-//        return Optional.empty();
+        List<Member> result = jdbcTemplate.query("select * from member where id = ?", memberRowMapper());
+        return result.stream().findAny();
     }
 
     @Override
@@ -42,11 +42,11 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
     }
 
     private RowMapper<Member> memberRowMapper() {
-        return new RowMapper<Member>() {
-            @Override
-            public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return null;
-            }
-        }
+        return (rs, rowNum) -> {
+            Member member = new Member();
+            member.setId(rs.getLong("id"));
+            member.setName(rs.getString("name"));
+            return member;
+        };
     }
 }
