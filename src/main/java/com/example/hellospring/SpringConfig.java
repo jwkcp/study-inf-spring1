@@ -13,20 +13,27 @@ import javax.persistence.EntityManager;
 public class SpringConfig {
 
 //    private DataSource dataSource;
-    private EntityManager em;
+//    private EntityManager em;
+
+//    @Autowired
+//    public SpringConfig(EntityManager em) {
+//        this.em = em;
+//    }
+
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public SpringConfig(EntityManager em) {
-        this.em = em;
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
 
-    @Bean
-    public MemberRepository memberRepository() {
-        return new JpaMemberRepository(em);
-    }
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new JpaMemberRepository(em);
+//    }
 }
